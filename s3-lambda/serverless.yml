@@ -62,17 +62,34 @@ provider:
 #    - include-me.py
 #    - include-me-dir/**
 
-functions:
-  hello:
-    handler: handler.hello
+custom:
+  bucket: s3-encora-task1
 
+
+functions:
   create:
     handler: convert.create
+  hello:
+    handler: handler.hello
+  printMessage:
+    handler: sample.printMessage
     events:
       - http:
           path: convert
           method: post
           cors: true
+      - s3:
+          bucket: ${self:custom.bucket}
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .xml
+  custom:
+    pythonRequirements:
+      dockerizePip: true
+  
+  plugins:
+    - serverless-python-requirements
+  
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -124,3 +141,6 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-python-requirements
