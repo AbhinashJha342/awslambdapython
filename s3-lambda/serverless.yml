@@ -81,11 +81,13 @@ functions:
           path: generate/xml
           method: post
           cors: true
-      - s3:
-          bucket: ${self:custom.bucket}
-          event: s3:ObjectCreated:*
-          rules:
-            - suffix: .xml
+
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: s3-encora-task
 
 plugins:
   - serverless-python-requirements
