@@ -1,0 +1,4 @@
+Requests
+boto
+dicttoxml
+json2xml
