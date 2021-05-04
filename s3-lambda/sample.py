@@ -18,6 +18,7 @@ def printMessage(event, context):
     m1 = ET.Element("header")
     root.append(m1)
     b1 = ET.SubElement(m1, "echoToken")
+    print(type(event['body']))
     eventbody = json.loads(event['body'])
     b1.text = eventbody['header']['echoToken']
     b2 = ET.SubElement(m1, "timestamp")

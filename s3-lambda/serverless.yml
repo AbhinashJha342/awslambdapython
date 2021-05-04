@@ -70,10 +70,6 @@ custom:
       pythonBin: /usr/local/bin/python3.9
 
 functions:
-  create:
-    handler: convert.create
-  hello:
-    handler: handler.hello
   printMessage:
     handler: sample.printMessage
     events:
