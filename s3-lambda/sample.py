@@ -7,7 +7,7 @@ import logging
 import json
 
 s3 = boto3.resource('s3')
-bucket = s3.Bucket('s3-encora-task')
+#bucket = s3.Bucket('s3-encora-task')
 bucket_name = "s3-encora-task"
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
