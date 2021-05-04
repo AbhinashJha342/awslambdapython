@@ -1,4 +1,3 @@
-import boto3
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import io
@@ -7,7 +6,6 @@ import logging
 import json
 
 s3 = boto3.resource('s3')
-#bucket = s3.Bucket('s3-encora-task')
 bucket_name = "s3-encora-task"
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -15,12 +13,6 @@ logger.setLevel(logging.INFO)
 
 def printMessage(event, context):
     logger.info("Received event: " + json.dumps(event, indent=2))
-    #logger.info("Content-Type = " + event['echoToken'])
-    #eventDict = json.dumps(event)
-    #print(eventDict)
-    #event = json.loads(eventDict)
-    #print(event)
-    #print("#####", type(event['headers']))
     logger.info("Headers are: " + event['headers']['User'] +" "+event['headers']['echoToken'])
     root = ET.Element("Reservation")
     m1 = ET.Element("header")
@@ -84,8 +76,6 @@ def printMessage(event, context):
     string_out = io.StringIO()
     string_out.write(xmlstr)
     s3.Object('s3-encora-task', 'output.xml').put(Body=string_out.getvalue())
-    # URL s3Url = s3Client.getUrl('s3-encora-task1', 'output.xml');
-    # logger.info("S3 url is " + s3.getUrl('s3-encora-task1', 'output.xml'));
     location = boto3.client('s3').get_bucket_location(Bucket=bucket_name)['LocationConstraint']
     url = "https://s3-%s.amazonaws.com/%s/%s" % (location, bucket_name, 'output.xml')
     response = {
